@@ -8,7 +8,6 @@ import (
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/stretchr/objx"
 )
 
 type templateHandler struct {
@@ -22,21 +21,12 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		t.templ =
 			template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
 	})
-	data := map[string]interface{}{
-		"Host": r.Host,
-	}
-	if authCookie, err := r.Cookie("auth"); err == nil {
-		data["UserData"] = objx.MustFromBase64(authCookie.Value)
-	}
-	t.templ.Execute(w, data)
+	t.templ.Execute(w, r)
 }
 
 func main() {
-	oauthSetup()
 
-	// http.Handle("/", MustAuth(&templateHandler{filename: "top.html"}))
-	// http.Handle("/login", &templateHandler{filename: "login.html"})
-	// http.HandleFunc("/auth/", loginHandler)
+	http.Handle("/", &templateHandler{filename: "top.html"})
 
 	fmt.Println("TEST DB")
 
