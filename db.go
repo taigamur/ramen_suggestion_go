@@ -17,6 +17,7 @@ const (
 	tableNamePost = "posts"
 )
 
+/*
 func init() {
 
 	Db := connectDB()
@@ -38,8 +39,8 @@ func init() {
 		comment TEXT,
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, tableNamePost)
 	Db.Exec(cmdP)
-
 }
+*/
 
 func open(path string, count uint) *sql.DB {
 	Db, err = sql.Open("mysql", path)
