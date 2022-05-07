@@ -39,6 +39,7 @@ func main() {
 	http.HandleFunc("/posts", index)
 	http.HandleFunc("/posts/new", postNew)
 	http.HandleFunc("/posts/save", postSave)
+	http.HandleFunc("/places/index", places)
 
 	// user, _ := GetUser(1)
 	// user.CreatePost(1, 10, "okok")

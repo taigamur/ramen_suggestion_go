@@ -12,6 +12,7 @@ type User struct {
 	PassWord  string
 	CreatedAt time.Time
 	Posts     []Post
+	Places    []Place
 }
 
 type Session struct {

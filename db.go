@@ -16,6 +16,7 @@ const (
 	tableNameUser    = "users"
 	tableNamePost    = "posts"
 	talbeNameSession = "sessions"
+	tableNamePlace   = "places"
 )
 
 func init() {
@@ -46,6 +47,12 @@ func init() {
 		user_id INT,
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, talbeNameSession)
 	Db.Exec(cmdS)
+
+	cmd := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		name TEXT,
+		address TEXT)`, tableNamePlace)
+	Db.Exec(cmd)
 }
 
 func open(path string, count uint) *sql.DB {

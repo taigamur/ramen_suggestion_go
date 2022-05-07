@@ -1,0 +1,12 @@
+{{ define "content" }}
+<h1>Sample TodoApp</h1>
+
+<hr>
+
+{{ range .Places }}
+<div>{{ .Name }}</div>
+<div>{{ .Address }}</div>
+<div> place </div>
+<hr>
+{{end}}
+{{end}}

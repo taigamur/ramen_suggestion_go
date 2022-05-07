@@ -59,6 +59,20 @@ func postSave(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 		http.Redirect(w, r, "/posts", 302)
+	}
+}
 
+func places(w http.ResponseWriter, r *http.Request) {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		user, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		places, _ := GetPlaces()
+		user.Places = places
+		generateHTML(w, user, "layout", "private_navbar", "place_index")
 	}
 }
