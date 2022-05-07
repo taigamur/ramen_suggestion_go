@@ -63,3 +63,21 @@ func GetPosts(user_id int) (posts []Post, err error) {
 	rows.Close()
 	return posts, err
 }
+
+func (t *Post) UpdatePost() error {
+	cmd := `update posts set comment = ?, place_id = ?, value = ? , user_id = ? where id = ?`
+	_, err = Db.Exec(cmd, t.Comment, t.PlaceID, t.Value, t.UserID, t.ID)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return err
+}
+
+func (t *Post) DeletePost() error {
+	cmd := `delete from posts where id = ?`
+	_, err = Db.Exec(cmd, t.ID)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return err
+}

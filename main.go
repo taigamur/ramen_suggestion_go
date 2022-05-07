@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"regexp"
+	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -29,6 +31,21 @@ func session(w http.ResponseWriter, r *http.Request) (s Session, err error) {
 	return s, err
 }
 
+var validPath = regexp.MustCompile("^/posts/(edit|save|update|delete)/([0-9]+)$")
+
+func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		q := validPath.FindStringSubmatch(r.URL.Path)
+		if q == nil {
+			http.NotFound(w, r)
+			return
+		}
+		id, _ := strconv.Atoi(q[2])
+		fmt.Println(id)
+		fn(w, r, id)
+	}
+}
+
 func main() {
 
 	http.HandleFunc("/", top)
@@ -39,12 +56,16 @@ func main() {
 	http.HandleFunc("/posts", index)
 	http.HandleFunc("/posts/new", postNew)
 	http.HandleFunc("/posts/save", postSave)
+	http.HandleFunc("/posts/edit/", parseURL(postEdit))
+	http.HandleFunc("/posts/update/", parseURL(postUpdate))
+	http.HandleFunc("/posts/delete/", parseURL(postDelete))
+
 	http.HandleFunc("/places/index", places)
 
 	// user, _ := GetUser(1)
 	// user.CreatePost(1, 10, "okok")
 	// session1, _ := user.CreateSession()
-	// valid, _ := session1.CheckSession()
+	// valid, _ := session1.CheckSess4ion()
 	// fmt.Println(valid)
 
 	// user2, _ := GetUser(3)

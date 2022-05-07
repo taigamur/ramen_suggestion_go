@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -56,6 +57,72 @@ func postSave(w http.ResponseWriter, r *http.Request) {
 		place_id, _ := strconv.Atoi(r.PostFormValue("place_id"))
 		value, _ := strconv.Atoi(r.PostFormValue("value"))
 		if err := user.CreatePost(place_id, value, comment); err != nil {
+			log.Println(err)
+		}
+		http.Redirect(w, r, "/posts", 302)
+	}
+}
+
+func postEdit(w http.ResponseWriter, r *http.Request, id int) {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		_, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		t, err := GetPost(id)
+		if err != nil {
+			log.Println(err)
+		}
+		generateHTML(w, t, "layout", "private_navbar", "post_edit")
+	}
+}
+
+func postUpdate(w http.ResponseWriter, r *http.Request, id int) {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		_, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		user, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		comment := r.PostFormValue("comment")
+		place_id, _ := strconv.Atoi(r.PostFormValue("place_id"))
+		value, _ := strconv.Atoi(r.PostFormValue("value"))
+		t := Post{ID: id, Comment: comment, PlaceID: place_id, Value: value, UserID: user.ID}
+		if err := t.UpdatePost(); err != nil {
+			log.Println(err)
+		}
+		http.Redirect(w, r, "/posts", 302)
+	}
+}
+
+func postDelete(w http.ResponseWriter, r *http.Request, id int) {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		err = r.ParseForm()
+		if err != nil {
+			log.Println(err)
+		}
+		_, err := sess.GetUserBySession()
+		if err != nil {
+			log.Println(err)
+		}
+		t, err := GetPost(id)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		fmt.Println(t)
+		if err := t.DeletePost(); err != nil {
 			log.Println(err)
 		}
 		http.Redirect(w, r, "/posts", 302)

@@ -1,0 +1,14 @@
+{{define "content"}}
+{{.Comment}}
+
+<form role="form" action="/posts/update/{{.ID}}" method="post">
+    <div class="lead">PostUpdate</div>
+    <div class="form-group">
+        <textarea class="form-control" name="comment" id="comment" placeholder="postsを更新" rows="4">{{.Comment}}</textarea>
+        <br/>
+        <br/>
+        <button class="btn btn-lg btn-primary pull-right" type="submit">更新</button>
+    </div>
+</form>
+
+{{end}}
