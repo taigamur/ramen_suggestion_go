@@ -49,3 +49,41 @@ func GetUser(id int) (user User, err error) {
 	)
 	return user, err
 }
+
+func GetUserByEmail(email string) (user User, err error) {
+	user = User{}
+	cmd := `select id, name, email, password, created_at from users where email = ?`
+	err = Db.QueryRow(cmd, email).Scan(
+		&user.ID,
+		&user.Name,
+		&user.Email,
+		&user.PassWord,
+		&user.CreatedAt,
+	)
+	return user, err
+}
+
+func (u *User) CreateSession() (session Session, err error) {
+	session = Session{}
+	cmd1 := `insert into sessions (email, user_id) values (?,?)`
+	_, err = Db.Exec(cmd1, u.Email, u.ID)
+	if err != nil {
+		log.Println(err)
+	}
+	cmd2 := `select id, email, user_id, created_at from sessions where user_id = ? and email = ?`
+	err = Db.QueryRow(cmd2, u.ID, u.Email).Scan(&session.ID, &session.Email, &session.UserID, &session.CreatedAt)
+	return session, err
+}
+
+func (s *Session) CheckSession() (valid bool, err error) {
+	cmd := `select id, email, user_id, created_at from sessions where email = ?`
+	err = Db.QueryRow(cmd, s.Email).Scan(&s.ID, &s.Email, &s.UserID, &s.CreatedAt)
+	if err != nil {
+		valid = false
+		return
+	}
+	if s.ID != 0 {
+		valid = true
+	}
+	return valid, err
+}

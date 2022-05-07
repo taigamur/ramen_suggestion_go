@@ -13,11 +13,11 @@ var Db *sql.DB
 var err error
 
 const (
-	tableNameUser = "users"
-	tableNamePost = "posts"
+	tableNameUser    = "users"
+	tableNamePost    = "posts"
+	talbeNameSession = "sessions"
 )
 
-/*
 func init() {
 
 	Db := connectDB()
@@ -32,15 +32,21 @@ func init() {
 	Db.Exec(cmdU)
 
 	cmdP := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
-		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id INT AUTO_INCREMENT PRIMARY KEY,
 		user_id INT NOT NULL,
 		place_id INT NOT NULL,
 		value INT,
 		comment TEXT,
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, tableNamePost)
 	Db.Exec(cmdP)
+
+	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		email TEXT,
+		user_id INT,
+		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, talbeNameSession)
+	Db.Exec(cmdS)
 }
-*/
 
 func open(path string, count uint) *sql.DB {
 	Db, err = sql.Open("mysql", path)
