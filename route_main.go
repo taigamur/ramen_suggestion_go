@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func top(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +57,8 @@ func postSave(w http.ResponseWriter, r *http.Request) {
 		comment := r.PostFormValue("comment")
 		place_id, _ := strconv.Atoi(r.PostFormValue("place_id"))
 		value, _ := strconv.Atoi(r.PostFormValue("value"))
-		if err := user.CreatePost(place_id, value, comment); err != nil {
+		date, _ := time.Parse("2006-01-02", (r.PostFormValue("date")))
+		if err := user.CreatePost(place_id, value, comment, date); err != nil {
 			log.Println(err)
 		}
 		http.Redirect(w, r, "/posts", 302)
@@ -96,7 +98,8 @@ func postUpdate(w http.ResponseWriter, r *http.Request, id int) {
 		comment := r.PostFormValue("comment")
 		place_id, _ := strconv.Atoi(r.PostFormValue("place_id"))
 		value, _ := strconv.Atoi(r.PostFormValue("value"))
-		t := Post{ID: id, Comment: comment, PlaceID: place_id, Value: value, UserID: user.ID}
+		date, _ := time.Parse("2006-01-02", (r.PostFormValue("date")))
+		t := Post{ID: id, Comment: comment, PlaceID: place_id, Value: value, UserID: user.ID, Date: date}
 		if err := t.UpdatePost(); err != nil {
 			log.Println(err)
 		}
