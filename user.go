@@ -11,6 +11,7 @@ type User struct {
 	Email     string
 	PassWord  string
 	CreatedAt time.Time
+	Posts     []Post
 }
 
 type Session struct {
@@ -86,4 +87,20 @@ func (s *Session) CheckSession() (valid bool, err error) {
 		valid = true
 	}
 	return valid, err
+}
+
+func (s *Session) DeleteSession() (err error) {
+	cmd := `delete from sessions where email = ?`
+	_, err = Db.Exec(cmd, s.ID)
+	if err != nil {
+		log.Println(err)
+	}
+	return err
+}
+
+func (s *Session) GetUserBySession() (user User, err error) {
+	user = User{}
+	cmd := `select id, name, email, created_at from users where id = ?`
+	err = Db.QueryRow(cmd, s.UserID).Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt)
+	return user, err
 }
