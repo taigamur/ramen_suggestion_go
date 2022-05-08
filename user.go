@@ -34,7 +34,7 @@ func (u *User) CreateUser() (err error) {
 		Encrypt(u.PassWord))
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return err
 }
