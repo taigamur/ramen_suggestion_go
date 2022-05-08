@@ -7,6 +7,7 @@
 {{ range .Posts }}
 <div>{{ .Comment }}</div>
 <div>{{ .Date }}</div>
+<div>{{ .GetMonth }} / {{ .GetDay }}</div>
 <p>[<a href="/posts/edit/{{.ID}}">Edit</a>]</p>
 <p>[<a href="/posts/delete/{{.ID}}">Delete</a>]</p>
 <hr>

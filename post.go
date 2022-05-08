@@ -24,7 +24,7 @@ func (u *User) CreatePost(place_id int, value int, comment string, date time.Tim
 		date) values (?,?,?,?,?)`
 	_, err = Db.Exec(cmd, u.ID, place_id, value, comment, date)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return err
 }
@@ -84,4 +84,12 @@ func (t *Post) DeletePost() error {
 		log.Fatalln(err)
 	}
 	return err
+}
+
+func (p *Post) GetMonth() int {
+	return int(p.Date.Month())
+}
+
+func (p *Post) GetDay() int {
+	return int(p.Date.Day())
 }
