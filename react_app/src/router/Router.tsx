@@ -1,15 +1,21 @@
-import { memo , VFC } from "react";
 import {Route, Switch} from "react-router-dom"
-import React from "react"
-
 import { Home } from "../components/pages/Home"
 import { Page404 } from "../components/pages/Page404";
+import { Index } from "../components/pages/Index";
+import { Root } from "../components/pages/Root" 
+import { HeaderLayout } from "../components/templates/HeaderLayout";
 
 export const Router = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <Home />
+                <Root />
+            </Route>
+            <Route exact path="/home">
+                <HeaderLayout><Home /></HeaderLayout>
+            </Route>
+            <Route>
+                <HeaderLayout><Index /></HeaderLayout>
             </Route>
             <Route path="*">
                 <Page404 />
