@@ -39,6 +39,25 @@ func (u *User) CreateUser() (err error) {
 	return err
 }
 
+// React 連携確認用のテスト
+func GetAllUsers() (users []User, err error) {
+	cmd := `select id, name, email from users`
+	rows, err := Db.Query(cmd)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	for rows.Next() {
+		var user User
+		err = rows.Scan(&user.ID, &user.Name, &user.Email)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		users = append(users, user)
+	}
+	rows.Close()
+	return users, err
+}
+
 func GetUser(id int) (user User, err error) {
 	user = User{}
 	cmd := `select id, name, email, password, created_at from users where id = ?`

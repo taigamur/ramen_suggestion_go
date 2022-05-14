@@ -7,6 +7,10 @@ export const Login: VFC = memo(() => {
     const [userName, setUserName] = useState("");
     const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
 
+    const LoginRequest = () => {
+        console.log("login request test")
+    }
+
     return(
         <Flex align="center" justify="center" height="100vh">
             <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
@@ -16,7 +20,7 @@ export const Login: VFC = memo(() => {
                     <Input placeholder="ユーザーネーム" value={userName} onChange={onChangeUserName}  />
                     <Input placeholder="パスワード" />
                     {/* <PrimaryButton disabled={true} loading={true}>ログイン</PrimaryButton> */}
-                    <PrimaryButton disabled={userName === ""}>ログイン</PrimaryButton>
+                    <PrimaryButton disabled={userName === ""} onClick={LoginRequest}>ログイン</PrimaryButton>
                 </Stack>
 
             </Box>

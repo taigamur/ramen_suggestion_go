@@ -47,6 +47,7 @@ func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc
 }
 
 func main() {
+	http.HandleFunc("/users/index", getAllUsers)
 
 	http.HandleFunc("/", top)
 	http.HandleFunc("/signup", signup)
@@ -61,6 +62,8 @@ func main() {
 	http.HandleFunc("/posts/delete/", parseURL(postDelete))
 
 	http.HandleFunc("/places/index", places)
+
+	// 以下 react用のAPI
 
 	// user, _ := GetUser(1)
 	// user.CreatePost(1, 10, "okok")

@@ -1,11 +1,24 @@
 import {memo, VFC, useState, ChangeEvent} from "react"
 import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react"
 import { PrimaryButton} from "../atoms/button/PrimaryButton"
+import axios from "axios";
+import { User } from "../../types/user" 
 
 export const Signup: VFC = memo(() => {
 
     const [userName, setUserName] = useState("");
     const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
+
+    const SignupRequest = () => {
+        console.log("test")
+        axios.post("http://localhost:3000/signup", {
+            mial: "taiga@example.com",
+            password: "taiga"
+        })
+        .then(function(response) {
+            console.log(response.data)
+        })
+    }
 
     return(
         <Flex align="center" justify="center" height="100vh">
@@ -17,7 +30,7 @@ export const Signup: VFC = memo(() => {
                     <Input placeholder="パスワード" />
                     <Input placeholder="パスワード(再入力)" />
                     {/* <PrimaryButton disabled={true} loading={true}>ログイン</PrimaryButton> */}
-                    <PrimaryButton disabled={userName === ""} >登録</PrimaryButton>
+                    <PrimaryButton disabled={userName === ""} onClick={SignupRequest} >登録</PrimaryButton>
                 </Stack>
 
             </Box>
