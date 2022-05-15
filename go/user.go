@@ -15,6 +15,12 @@ type User struct {
 	Places    []Place
 }
 
+type apiUser struct {
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
 type Session struct {
 	ID        int
 	Email     string
@@ -40,14 +46,14 @@ func (u *User) CreateUser() (err error) {
 }
 
 // React 連携確認用のテスト
-func GetAllUsers() (users []User, err error) {
+func GetAllUsers() (users []apiUser, err error) {
 	cmd := `select id, name, email from users`
 	rows, err := Db.Query(cmd)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	for rows.Next() {
-		var user User
+		var user apiUser
 		err = rows.Scan(&user.ID, &user.Name, &user.Email)
 		if err != nil {
 			log.Fatalln(err)

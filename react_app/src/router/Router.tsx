@@ -7,6 +7,7 @@ import { HeaderLayout } from "../components/templates/HeaderLayout";
 import { Signup } from "../components/pages/Signup";
 import { Login } from "../components/pages/Login"
 import { Places } from "../components/pages/Places"
+import { UserIndex } from "../components/pages/UserIndex";
 
 export const Router = () => {
     return (
@@ -17,6 +18,7 @@ export const Router = () => {
             <Route exact path="/login"><Login/></Route>
             <Route exact path="/signup"><Signup/></Route>
             <Route exact path="/places"><HeaderLayout><Places/></HeaderLayout></Route>
+            <Route exact path="/user/index"><UserIndex/></Route>
 
             <Route path="*"><Page404 /></Route>
         </Switch>

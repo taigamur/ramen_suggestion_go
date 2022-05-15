@@ -6,16 +6,9 @@ import (
 	"net/http"
 )
 
-type ResponseUser struct {
-	Status int    `json:"status"`
-	Users  []User `json:"users"`
-}
-
 func getAllUsers(w http.ResponseWriter, r *http.Request) {
-	users, _ := GetAllUsers()
-	response := ResponseUser{http.StatusOK, users}
-	res, _ := json.Marshal(response)
-
-	w.Header().Set("Content-Type", "application/json")
+	data, _ := GetAllUsers()
+	res, _ := json.Marshal(data)
+	setApiHeader(w)
 	fmt.Fprint(w, string(res))
 }
