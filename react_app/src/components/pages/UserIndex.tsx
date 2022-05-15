@@ -31,7 +31,7 @@ export const UserIndex: VFC = memo(() => {
             <Wrap>
                 {users.map((user) => (
                     <WrapItem key={user.id} mx="auto">
-                    <UserCard id={user.id} name={user.name} email={user.email} onClick={onClickUser}/>
+                    <UserCard id={user.id} name={user.name} onClick={onClickUser}/>
                     </WrapItem>
                 ))}
             </Wrap>
