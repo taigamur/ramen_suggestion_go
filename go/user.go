@@ -72,6 +72,16 @@ func GetUser(id int) (user User, err error) {
 	return user, err
 }
 
+func GetApiUser(name string) (user apiUser, err error) {
+	user = apiUser{}
+	cmd := `select id, name from users where name = ?`
+	err = Db.QueryRow(cmd, name).Scan(
+		&user.ID,
+		&user.Name,
+	)
+	return user, err
+}
+
 func GetUserByUserName(user_name string) (user User, err error) {
 	user = User{}
 	cmd := `select id, name, password, created_at from users where name = ?`

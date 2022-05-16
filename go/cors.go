@@ -7,7 +7,7 @@ func setApiHeader(w http.ResponseWriter) error {
 	// protocol := "http://"
 	// host := "localhost:3000"
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
 	w.Header().Set("Content-Type", "application/json")
 	return nil
 }

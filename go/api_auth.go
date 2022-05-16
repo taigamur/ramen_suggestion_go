@@ -1,32 +1,52 @@
 package main
 
-// apiによるsignup usernameが重複している時は別のエラーを返すようにする
-// func signup(w http.ResponseWriter, r *http.Request) {
-// 	if r.Method == "GET" {
-// 		_, err := session(w, r)
-// 		if err != nil {
-// 			generateHTML(w, nil, "layout", "public_navbar", "signup")
-// 		} else {
-// 			http.Redirect(w, r, "/posts", 302)
-// 		}
-// 	} else if r.Method == "POST" {
-// 		err := r.ParseForm()
-// 		if err != nil {
-// 			log.Fatalln(err)
-// 		}
-// 		user := &User{
-// 			Name:     r.PostFormValue("name"),
-// 			PassWord: r.PostFormValue("password"),
-// 		}
-// 		if err := user.CreateUser(); err != nil {
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
 
-// 			if err.(*mysql.MySQLError).Number == 1062 {
-// 				log.Println("duplicate error")
-// 				http.Redirect(w, r, "/signup", 302)
-// 			} else {
-// 				http.Redirect(w, r, "/signup", 302)
-// 			}
-// 		}
-// 		http.Redirect(w, r, "/", 302)
-// 	}
-// }
+	"github.com/go-sql-driver/mysql"
+)
+
+// apiによるsignup usernameが重複している時は別のエラーを返すようにする
+func signup(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	request := &User{
+		Name:     r.PostFormValue("name"),
+		PassWord: r.PostFormValue("password"),
+	}
+	if err := request.CreateUser(); err != nil {
+		if err.(*mysql.MySQLError).Number == 1062 {
+			w.WriteHeader(http.StatusForbidden)
+			log.Println("duplicate error")
+		} else {
+			w.WriteHeader(http.StatusOK)
+			apiuser, _ := GetApiUser(request.Name)
+			res, _ := json.Marshal(apiuser)
+			fmt.Fprint(w, string(res))
+			log.Println("signup ok")
+		}
+	}
+}
+
+func login(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	request := &User{
+		Name:     r.PostFormValue("name"),
+		PassWord: r.PostFormValue("password"),
+	}
+	user, _ := GetUserByUserName(request.Name)
+	log.Println(request.Name)
+	log.Println(request.PassWord)
+
+	if user.PassWord == Encrypt(request.PassWord) {
+		w.WriteHeader(http.StatusOK)
+		apiuser, _ := GetApiUser(request.Name)
+		res, _ := json.Marshal(apiuser)
+		fmt.Fprint(w, string(res))
+	} else {
+		w.WriteHeader(http.StatusForbidden)
+	}
+
+}

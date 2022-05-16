@@ -7,14 +7,16 @@ import { User } from "../../types/user"
 export const Signup: VFC = memo(() => {
 
     const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
     const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
+    const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
     const SignupRequest = () => {
-        console.log("test")
-        axios.post("http://localhost:3000/signup", {
-            mial: "taiga@example.com",
-            password: "taiga"
-        })
+        
+        var params = new URLSearchParams();
+        params.append('name', userName)
+        params.append('password', password)
+        axios.post("http://localhost:8080/signup", params)
         .then(function(response) {
             console.log(response.data)
         })
@@ -23,11 +25,11 @@ export const Signup: VFC = memo(() => {
     return(
         <Flex align="center" justify="center" height="100vh">
             <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
-                <Heading as="h1" size="lg" textAlign="center">Sample App</Heading>
+                <Heading as="h1" size="lg" textAlign="center">Ramen Concierge</Heading>
                 <Divider my={4}/>
                 <Stack spacing={6} py={4} px={10}>
                     <Input placeholder="ユーザーネーム" value={userName} onChange={onChangeUserName} />
-                    <Input placeholder="パスワード" />
+                    <Input placeholder="パスワード" value={password} onChange={onChangePassword}/>
                     <Input placeholder="パスワード(再入力)" />
                     {/* <PrimaryButton disabled={true} loading={true}>ログイン</PrimaryButton> */}
                     <PrimaryButton disabled={userName === ""} onClick={SignupRequest} >登録</PrimaryButton>
