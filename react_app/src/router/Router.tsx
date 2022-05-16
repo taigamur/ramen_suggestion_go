@@ -8,18 +8,20 @@ import { Signup } from "../components/pages/Signup";
 import { Login } from "../components/pages/Login"
 import { Places } from "../components/pages/Places"
 import { UserIndex } from "../components/pages/UserIndex";
+import { LoginUserProvider } from "../providers/LoginUserProvider";
 
 export const Router = () => {
     return (
         <Switch>
-            <Route exact path="/"><Root /></Route>
-            <Route exact path="/home"><HeaderLayout><Home /></HeaderLayout></Route>
-            <Route exact path="/index"><HeaderLayout><Index /></HeaderLayout></Route>
-            <Route exact path="/login"><Login/></Route>
-            <Route exact path="/signup"><Signup/></Route>
-            <Route exact path="/places"><HeaderLayout><Places/></HeaderLayout></Route>
-            <Route exact path="/user/index"><UserIndex/></Route>
-
+            <LoginUserProvider>
+                <Route exact path="/"><Root /></Route>
+                <Route exact path="/home"><HeaderLayout><Home /></HeaderLayout></Route>
+                <Route exact path="/index"><HeaderLayout><Index /></HeaderLayout></Route>
+                <Route exact path="/login"><Login/></Route>
+                <Route exact path="/signup"><Signup/></Route>
+                <Route exact path="/places"><HeaderLayout><Places/></HeaderLayout></Route>
+                <Route exact path="/user/index"><UserIndex/></Route>
+            </LoginUserProvider>
             <Route path="*"><Page404 /></Route>
         </Switch>
     );

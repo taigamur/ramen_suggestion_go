@@ -3,8 +3,13 @@ import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react"
 import { PrimaryButton} from "../atoms/button/PrimaryButton"
 import axios from "axios";
 import { User } from "../../types/user" 
+import { useHistory } from "react-router-dom";
+import { useMessage } from "../../hooks/useMessage";
 
 export const Signup: VFC = memo(() => {
+    const history = useHistory();
+    const { showMessage } = useMessage();
+    const [loading, setLoading] = useState(false)
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -12,13 +17,20 @@ export const Signup: VFC = memo(() => {
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
     const SignupRequest = () => {
-        
+        setLoading(true);
         var params = new URLSearchParams();
         params.append('name', userName)
         params.append('password', password)
         axios.post("http://localhost:8080/signup", params)
-        .then(function(response) {
-            console.log(response.data)
+        .then((res) => {
+            if(res.status == 200){
+                showMessage({title: "ユーザー登録完了", status: "success"});
+                setLoading(false);
+                history.push("/home")
+            }
+        }).catch(() => {
+            showMessage({title: "ユーザー名が既に使用されています", description: "他のユーザー名を入力してください",status: "error"});
+            setLoading(false)
         })
     }
 
@@ -32,7 +44,7 @@ export const Signup: VFC = memo(() => {
                     <Input placeholder="パスワード" value={password} onChange={onChangePassword}/>
                     <Input placeholder="パスワード(再入力)" />
                     {/* <PrimaryButton disabled={true} loading={true}>ログイン</PrimaryButton> */}
-                    <PrimaryButton disabled={userName === ""} onClick={SignupRequest} >登録</PrimaryButton>
+                    <PrimaryButton disabled={userName === ""} loading={loading} onClick={SignupRequest} >登録</PrimaryButton>
                 </Stack>
 
             </Box>
