@@ -1,9 +1,10 @@
 import { memo, VFC, useCallback} from "react"
-import {Flex, Heading, Link, Box, useDisclosure} from "@chakra-ui/react"
+import {Flex, Heading, Box, Button, useDisclosure, Drawer, DrawerBody, DrawerContent, DrawerOverlay} from "@chakra-ui/react"
 import { useHistory } from "react-router-dom";
 
 import { HeaderListButton } from "../atoms/button/HeaderListButton";
 import { HeaderMenuDrawer } from "../molecules/HeaderMenuDrawer"
+
 
 
 export const Header: VFC = memo(() => {
@@ -27,16 +28,35 @@ export const Header: VFC = memo(() => {
                 </Flex>
                 <Flex align="center" fontSize="sm" flexGrow={2} display={{base: "none", md:"flex"}}>
                     <Box pr={4}>
-                        <Link href='/user/info'>ユーザー情報</Link>
+                        <Button onClick={onClickA} variant='link' color="white" size="xs">ユーザー情報</Button>
                     </Box>
                     <Box pr={4}>
-                        <Link href='/index'>index page</Link>
+                        <Button onClick={onClickB} variant='link' color="white" size="xs">Index</Button>
                     </Box>
-                    <Link>LinkC</Link>
+                    <Box>
+                        <Button onClick={onClickC} variant='link' color="white" size="xs">LinkC</Button>
+                    </Box>
                 </Flex>
                 <HeaderListButton onOpen={onOpen}/>
             </Flex>
-            <HeaderMenuDrawer onClose={onClose} isOpen={isOpen} onClickA={onClickA} onClickB={onClickB} onClickC={onClickC} />
+            {/* <HeaderMenuDrawer onClose={onClose} isOpen={isOpen} onClickA={onClickA} onClickB={onClickB} onClickC={onClickC} /> */}
+            <Drawer placement="right" size="xs" onClose={onClose} isOpen={isOpen}>
+                <DrawerOverlay>
+                    <DrawerContent>
+                        <DrawerBody p={0} bg="gray.100">
+                            <Button w="100%" onClick={onClickA}>
+                                ユーザー情報
+                            </Button>
+                            <Button w="100%" onClick={onClickB}>
+                                Index
+                            </Button>
+                            <Button w="100%" onClick={onClickC}>
+                                Page3
+                            </Button>
+                        </DrawerBody>
+                    </DrawerContent>
+                </DrawerOverlay>
+            </Drawer>
         </>
     );
 })

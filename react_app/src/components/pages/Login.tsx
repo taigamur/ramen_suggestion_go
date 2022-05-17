@@ -13,7 +13,6 @@ export const Login: VFC = memo(() => {
     const { showMessage } = useMessage()
 
     const { setLoginUser } = useLoginUser();
-
     const { loginUser } = useLoginUser();
 
     const [loading, setLoading] = useState(false)
@@ -23,15 +22,11 @@ export const Login: VFC = memo(() => {
     const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
-    const [cookies, setCookie] = useCookies();
+    const [cookies, setCookie] = useCookies(['user']);
 
-    // if()
     useEffect(() => {
-            if(cookies.user !== undefined){
-            console.log(cookies)
-            console.log("cookieがありました")
-            setLoginUser(cookies.user)
-            history.push("/home");
+            if(loginUser !== null){
+                history.push("/home")
             }
     });
 

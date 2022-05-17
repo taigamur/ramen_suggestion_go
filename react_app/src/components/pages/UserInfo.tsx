@@ -9,6 +9,7 @@ export const UserInfo: VFC = memo(() => {
 
     const history = useHistory()
     const { loginUser } = useLoginUser();
+    const { setLoginUser } = useLoginUser();
 
     const [,,removeCookie ] = useCookies();
 
@@ -16,6 +17,7 @@ export const UserInfo: VFC = memo(() => {
 
     const onClick = () => {
         removeCookie("user")
+        setLoginUser(null)
         showMessage({title: "ログアウトしました", status:"success"})
         history.push("/login")
     }
