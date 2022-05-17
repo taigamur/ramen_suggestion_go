@@ -16,6 +16,9 @@ import { useMessage } from "../../hooks/useMessage";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useLoginUser } from "../../hooks/useLoginUser";
+import DatePicker from "react-datepicker"
+
+import "react-datepicker/dist/react-datepicker.css"
 
 type Props = {
     onClose: () => void;
@@ -37,21 +40,30 @@ export const PostModal = memo((props: Props) => {
     const [point, setPoint] = useState("");
     const onChangePoint = (e: ChangeEvent<HTMLInputElement>) => setPoint(e.target.value);
 
+    const [startDate, setStartDate] = useState(new Date());
+
     const { onClose, isOpen } = props;
 
     const onClickPost = () => {
-        console.log("post")
+        console.log(startDate)
+
+        var date = startDate.getFullYear() + "/" + ("00" + (startDate.getMonth()+1)).slice(-2) + "/" + ("00" + startDate.getDate()).slice(-2);
+        console.log(date)
+
         var params = new URLSearchParams();
         params.append('place_id', '3');
         params.append('point', point);
-        params.append('uesr_id', String(loginUser!.id))
+        params.append('uesrname', loginUser!.name);
+        params.append('date', date);
         axios.post("http://localhost:8080/post/new",params)
         .then((res) => {
             if(res.status == 200){
                 console.log("post success")
+                showMessage({title: "投稿完了", status:"success"})
             }
         }).catch(() => {
             console.log("post failed")
+            showMessage({title:"投稿失敗", status:"error"})
         })
     }
 
@@ -67,8 +79,12 @@ export const PostModal = memo((props: Props) => {
             <ModalBody pb={6}>
                 <FormControl>
 
-                    <FormLabel>yyyy/mm/dd</FormLabel>
-                    <Input id="date" placeholder='date' />
+                    {/* <FormLabel>yyyy/mm/dd</FormLabel>
+                    <Input id="date" placeholder='date' /> */}
+
+                    {/* <DatePicker selected={startDate} onChange={handleChange} /> */}
+                    <FormLabel>日付</FormLabel>
+                    <DatePicker selected={startDate} dateFormat="yyyy/MM/dd" onChange={(date:Date) => setStartDate(date)} />
 
                     <FormLabel>Place</FormLabel>
                     <Input readOnly placeholder='****'/>

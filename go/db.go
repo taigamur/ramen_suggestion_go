@@ -37,7 +37,7 @@ func init() {
 		place_id INT NOT NULL,
 		value INT,
 		comment TEXT,
-		date DATETIME NOT NULL,
+		date varchar(50) NOT NULL,
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, tableNamePost)
 	Db.Exec(cmdP)
 

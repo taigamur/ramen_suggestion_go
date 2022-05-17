@@ -11,18 +11,17 @@ type Post struct {
 	PlaceID   int
 	Value     int
 	Comment   string
-	Date      time.Time
+	Date      string
 	CreatedAt time.Time
 }
 
-func (u *User) CreatePost(place_id int, value int, comment string, date time.Time) (err error) {
+func CreatePost(place_id int, username string, value int, date string) (err error) {
 	cmd := `insert into posts (
 		username,
 		place_id,
 		value,
-		comment,
-		date) values (?,?,?,?,?)`
-	_, err = Db.Exec(cmd, u.Name, place_id, value, comment, date)
+		date) values (?,?,?,?)`
+	_, err = Db.Exec(cmd, username, place_id, value, date)
 	if err != nil {
 		log.Println(err)
 	}
@@ -86,10 +85,10 @@ func (t *Post) DeletePost() error {
 	return err
 }
 
-func (p *Post) GetMonth() int {
-	return int(p.Date.Month())
-}
+// func (p *Post) GetMonth() int {
+// 	return int(p.Date.Month())
+// }
 
-func (p *Post) GetDay() int {
-	return int(p.Date.Day())
-}
+// func (p *Post) GetDay() int {
+// 	return int(p.Date.Day())
+// }
