@@ -11,6 +11,7 @@ import { UserIndex } from "../components/pages/UserIndex";
 import { LoginUserProvider } from "../providers/LoginUserProvider";
 import { UserInfo } from "../components/pages/UserInfo"; 
 import { Post } from "../components/pages/Post"
+import { PostNew } from "../components/pages/PostNew"
 
 export const Router = () => {
     return (
@@ -24,7 +25,8 @@ export const Router = () => {
                 <Route exact path="/places"><HeaderLayout><Places/></HeaderLayout></Route>
                 <Route exact path="/user/index"><UserIndex/></Route>
                 <Route exact path="/user/info"><HeaderLayout><UserInfo /></HeaderLayout></Route>
-                <Route exact path="/user/:username/post"><Post/></Route>
+                <Route exact path="/user/:username/post"><HeaderLayout><Post/></HeaderLayout></Route>
+                <Route exact path="/post/new"><HeaderLayout><PostNew /></HeaderLayout></Route>
                 {/* <Route exact path="/user/:username/place"><Place/></Route> */}
             </LoginUserProvider>
             <Route path="*"><Page404 /></Route>

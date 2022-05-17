@@ -7,7 +7,7 @@ import (
 
 type Post struct {
 	ID        int
-	UserID    int
+	UserName  string
 	PlaceID   int
 	Value     int
 	Comment   string
@@ -17,12 +17,12 @@ type Post struct {
 
 func (u *User) CreatePost(place_id int, value int, comment string, date time.Time) (err error) {
 	cmd := `insert into posts (
-		user_id,
+		username,
 		place_id,
 		value,
 		comment,
 		date) values (?,?,?,?,?)`
-	_, err = Db.Exec(cmd, u.ID, place_id, value, comment, date)
+	_, err = Db.Exec(cmd, u.Name, place_id, value, comment, date)
 	if err != nil {
 		log.Println(err)
 	}
@@ -30,10 +30,10 @@ func (u *User) CreatePost(place_id int, value int, comment string, date time.Tim
 }
 
 func GetPost(id int) (post Post, err error) {
-	cmd := `select id, user_id, place_id, value, comment, date, created_at from posts where id = ?`
+	cmd := `select id, username, place_id, value, comment, date, created_at from posts where id = ?`
 	err = Db.QueryRow(cmd, id).Scan(
 		&post.ID,
-		&post.UserID,
+		&post.UserName,
 		&post.PlaceID,
 		&post.Value,
 		&post.Comment,
@@ -43,16 +43,16 @@ func GetPost(id int) (post Post, err error) {
 	return post, err
 }
 
-func GetPosts(user_id int) (posts []Post, err error) {
-	cmd := `select id, user_id, place_id, value, comment, date, created_at from posts where user_id = ? order by date desc`
-	rows, err := Db.Query(cmd, user_id)
+func GetPosts(username string) (posts []Post, err error) {
+	cmd := `select id, username, place_id, value, comment, date, created_at from posts where username = ? order by date desc`
+	rows, err := Db.Query(cmd, username)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	for rows.Next() {
 		var post Post
 		err = rows.Scan(&post.ID,
-			&post.UserID,
+			&post.UserName,
 			&post.PlaceID,
 			&post.Value,
 			&post.Comment,
@@ -69,8 +69,8 @@ func GetPosts(user_id int) (posts []Post, err error) {
 }
 
 func (t *Post) UpdatePost() error {
-	cmd := `update posts set comment = ?, place_id = ?, value = ? , user_id = ? , date = ? where id = ?`
-	_, err = Db.Exec(cmd, t.Comment, t.PlaceID, t.Value, t.UserID, t.Date, t.ID)
+	cmd := `update posts set comment = ?, place_id = ?, value = ? , username = ? , date = ? where id = ?`
+	_, err = Db.Exec(cmd, t.Comment, t.PlaceID, t.Value, t.UserName, t.Date, t.ID)
 	if err != nil {
 		log.Fatalln(err)
 	}

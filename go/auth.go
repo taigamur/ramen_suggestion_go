@@ -1,10 +1,5 @@
 package main
 
-import (
-	"log"
-	"net/http"
-)
-
 // func signup(w http.ResponseWriter, r *http.Request) {
 // 	if r.Method == "GET" {
 // 		_, err := session(w, r)
@@ -44,38 +39,38 @@ import (
 // 	}
 // }
 
-func authecticate(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	user, err := GetUserByUserName(r.PostFormValue("name"))
-	if err != nil {
-		log.Println(err)
-		http.Redirect(w, r, "/login", 302)
-	}
-	if user.PassWord == Encrypt(r.PostFormValue("password")) {
-		session, err := user.CreateSession()
-		if err != nil {
-			log.Println(err)
-		}
-		cookie := http.Cookie{
-			Name:     "_cookie",
-			Value:    session.UserName,
-			HttpOnly: true,
-		}
-		http.SetCookie(w, &cookie)
-		http.Redirect(w, r, "/", 302)
-	} else {
-		http.Redirect(w, r, "/login", 302)
-	}
-}
+// func authecticate(w http.ResponseWriter, r *http.Request) {
+// 	err := r.ParseForm()
+// 	user, err := GetUserByUserName(r.PostFormValue("name"))
+// 	if err != nil {
+// 		log.Println(err)
+// 		http.Redirect(w, r, "/login", 302)
+// 	}
+// 	if user.PassWord == Encrypt(r.PostFormValue("password")) {
+// 		session, err := user.CreateSession()
+// 		if err != nil {
+// 			log.Println(err)
+// 		}
+// 		cookie := http.Cookie{
+// 			Name:     "_cookie",
+// 			Value:    session.UserName,
+// 			HttpOnly: true,
+// 		}
+// 		http.SetCookie(w, &cookie)
+// 		http.Redirect(w, r, "/", 302)
+// 	} else {
+// 		http.Redirect(w, r, "/login", 302)
+// 	}
+// }
 
-func logout(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("_cookie")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	if err != http.ErrNoCookie {
-		session := Session{UserName: cookie.Value}
-		session.DeleteSession()
-	}
-	http.Redirect(w, r, "/login", 302)
-}
+// func logout(w http.ResponseWriter, r *http.Request) {
+// 	cookie, err := r.Cookie("_cookie")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// 	if err != http.ErrNoCookie {
+// 		session := Session{UserName: cookie.Value}
+// 		session.DeleteSession()
+// 	}
+// 	http.Redirect(w, r, "/login", 302)
+// }

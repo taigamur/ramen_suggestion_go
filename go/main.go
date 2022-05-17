@@ -20,16 +20,16 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
-func session(w http.ResponseWriter, r *http.Request) (s Session, err error) {
-	cookie, err := r.Cookie("_cookie")
-	if err == nil {
-		s = Session{UserName: cookie.Value}
-		if ok, _ := s.CheckSession(); !ok {
-			err = fmt.Errorf("Inavlid session")
-		}
-	}
-	return s, err
-}
+// func session(w http.ResponseWriter, r *http.Request) (s Session, err error) {
+// 	cookie, err := r.Cookie("_cookie")
+// 	if err == nil {
+// 		s = Session{UserName: cookie.Value}
+// 		if ok, _ := s.CheckSession(); !ok {
+// 			err = fmt.Errorf("Inavlid session")
+// 		}
+// 	}
+// 	return s, err
+// }
 
 var validPath = regexp.MustCompile("^/posts/(edit|save|update|delete)/([0-9]+)$")
 
@@ -49,19 +49,19 @@ func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc
 func main() {
 	http.HandleFunc("/users/index", getAllUsers)
 
-	http.HandleFunc("/", top)
+	// http.HandleFunc("/", top)
 	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/authenticate", authecticate)
-	http.HandleFunc("/logout", logout)
-	http.HandleFunc("/posts", index)
-	http.HandleFunc("/posts/new", postNew)
-	http.HandleFunc("/posts/save", postSave)
-	http.HandleFunc("/posts/edit/", parseURL(postEdit))
-	http.HandleFunc("/posts/update/", parseURL(postUpdate))
-	http.HandleFunc("/posts/delete/", parseURL(postDelete))
+	// http.HandleFunc("/authenticate", authecticate)
+	// http.HandleFunc("/logout", logout)
+	// http.HandleFunc("/posts", index)
+	http.HandleFunc("/post/new", postNew)
+	// http.HandleFunc("/posts/save", postSave)
+	// http.HandleFunc("/posts/edit/", parseURL(postEdit))
+	// http.HandleFunc("/posts/update/", parseURL(postUpdate))
+	// http.HandleFunc("/posts/delete/", parseURL(postDelete))
 
-	http.HandleFunc("/places/index", places)
+	// http.HandleFunc("/places/index", places)
 
 	// 以下 react用のAPI
 

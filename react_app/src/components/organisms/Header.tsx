@@ -3,7 +3,7 @@ import {Flex, Heading, Box, Button, useDisclosure, Drawer, DrawerBody, DrawerCon
 import { useHistory } from "react-router-dom";
 
 import { HeaderListButton } from "../atoms/button/HeaderListButton";
-import { HeaderMenuDrawer } from "../molecules/HeaderMenuDrawer"
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 
 
@@ -11,11 +11,21 @@ export const Header: VFC = memo(() => {
     const { isOpen, onOpen, onClose} = useDisclosure();
 
     const history = useHistory();
-    const onClickHome = useCallback(() => history.push("/home"), []);
 
+    const { loginUser } = useLoginUser();
+
+    if (loginUser === null){
+        history.push("/login");
+    }
+
+    const onClickHome = useCallback(() => history.push("/home"), []);
     const onClickA = useCallback(() => history.push("/user/info"), []);
     const onClickB = useCallback(() => history.push("/index"), []);
-    const onClickC = useCallback(() => history.push("/index"), []);
+    const onClickC = useCallback(() => {
+        const name = loginUser?.name
+        const url = "/user/" + name + "/post"
+        history.push(url)
+    }, []);
 
 
     return (
@@ -39,7 +49,6 @@ export const Header: VFC = memo(() => {
                 </Flex>
                 <HeaderListButton onOpen={onOpen}/>
             </Flex>
-            {/* <HeaderMenuDrawer onClose={onClose} isOpen={isOpen} onClickA={onClickA} onClickB={onClickB} onClickC={onClickC} /> */}
             <Drawer placement="right" size="xs" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay>
                     <DrawerContent>

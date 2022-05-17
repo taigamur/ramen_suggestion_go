@@ -15,3 +15,13 @@ func getAllUsers(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, string(res))
 }
+
+func postNew(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	// request := &User{
+	// 	Name: r.PostFormValue("name"),
+	// }
+
+	// posts, _ := GetPosts(request.Name)
+	w.WriteHeader(http.StatusOK)
+}
