@@ -19,10 +19,10 @@ export const HeaderMenuDrawer: VFC<Props> = memo((props) => {
                 <DrawerContent>
                     <DrawerBody p={0} bg="gray.100">
                         <Button w="100%" onClick={onClickA}>
-                            Page1
+                            ユーザー情報
                         </Button>
                         <Button w="100%" onClick={onClickB}>
-                            Page2
+                            Index
                         </Button>
                         <Button w="100%" onClick={onClickC}>
                             Page3

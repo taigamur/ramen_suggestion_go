@@ -13,7 +13,7 @@ export const HeaderListButton: VFC<Props> = memo((props) => {
             aria-label="menu-button" 
             icon={<HamburgerIcon/>} 
             size="sm" variant="unstyled" 
-            display={{base: "block", md: "none"}} 
+            display={{base: "block", md: "block"}} 
             onClick={onOpen}
         />
     );

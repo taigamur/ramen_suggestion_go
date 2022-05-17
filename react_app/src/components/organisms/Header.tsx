@@ -11,8 +11,9 @@ export const Header: VFC = memo(() => {
 
     const history = useHistory();
     const onClickHome = useCallback(() => history.push("/home"), []);
-    const onClickA = useCallback(() => history.push("/"), []);
-    const onClickB = useCallback(() => history.push("/home"), []);
+
+    const onClickA = useCallback(() => history.push("/user/info"), []);
+    const onClickB = useCallback(() => history.push("/index"), []);
     const onClickC = useCallback(() => history.push("/index"), []);
 
 
@@ -26,10 +27,10 @@ export const Header: VFC = memo(() => {
                 </Flex>
                 <Flex align="center" fontSize="sm" flexGrow={2} display={{base: "none", md:"flex"}}>
                     <Box pr={4}>
-                        <Link>LinkA</Link>
+                        <Link href='/user/info'>ユーザー情報</Link>
                     </Box>
                     <Box pr={4}>
-                        <Link>LinkB</Link>
+                        <Link href='/index'>index page</Link>
                     </Box>
                     <Link>LinkC</Link>
                 </Flex>

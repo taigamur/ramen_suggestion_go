@@ -9,6 +9,7 @@ import { Login } from "../components/pages/Login"
 import { Places } from "../components/pages/Places"
 import { UserIndex } from "../components/pages/UserIndex";
 import { LoginUserProvider } from "../providers/LoginUserProvider";
+import { UserInfo } from "../components/pages/UserInfo"; 
 
 export const Router = () => {
     return (
@@ -21,6 +22,7 @@ export const Router = () => {
                 <Route exact path="/signup"><Signup/></Route>
                 <Route exact path="/places"><HeaderLayout><Places/></HeaderLayout></Route>
                 <Route exact path="/user/index"><UserIndex/></Route>
+                <Route exact path="/user/info"><HeaderLayout><UserInfo /></HeaderLayout></Route>
             </LoginUserProvider>
             <Route path="*"><Page404 /></Route>
         </Switch>

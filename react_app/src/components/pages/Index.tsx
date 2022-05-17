@@ -1,5 +1,15 @@
 import {memo, VFC} from "react"
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 export const Index: VFC = memo(() => {
-    return <p>Indexページです。</p>;
+    
+    const { loginUser } = useLoginUser();
+
+    return(
+        <>
+            <p>Indexページです。</p>
+            <p>{loginUser?.name}さん</p>
+        </>
+
+    );
 });

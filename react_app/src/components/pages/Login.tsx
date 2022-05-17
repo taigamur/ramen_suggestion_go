@@ -1,10 +1,11 @@
-import {memo, VFC, useState, ChangeEvent} from "react"
+import {memo, VFC, useState, ChangeEvent, useEffect } from "react"
 import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react"
 import { PrimaryButton} from "../atoms/button/PrimaryButton"
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useMessage } from "../../hooks/useMessage";
 import { useLoginUser } from "../../hooks/useLoginUser";
+import { useCookies } from "react-cookie";
 
 
 export const Login: VFC = memo(() => {
@@ -13,12 +14,26 @@ export const Login: VFC = memo(() => {
 
     const { setLoginUser } = useLoginUser();
 
+    const { loginUser } = useLoginUser();
+
     const [loading, setLoading] = useState(false)
 
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+    const [cookies, setCookie] = useCookies();
+
+    // if()
+    useEffect(() => {
+            if(cookies.user !== undefined){
+            console.log(cookies)
+            console.log("cookieがありました")
+            setLoginUser(cookies.user)
+            history.push("/home");
+            }
+    });
 
     const LoginRequest = () => {
         setLoading(true);
@@ -32,6 +47,7 @@ export const Login: VFC = memo(() => {
                 console.log(res.data)
                 showMessage({title: "ログインしました", status: "success"});
                 setLoading(false);
+                setCookie('user', res.data)
                 history.push("/home");
             }
         }).catch((res) => {
