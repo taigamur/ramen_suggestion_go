@@ -53,7 +53,8 @@ export const PostModal = memo((props: Props) => {
         var params = new URLSearchParams();
         params.append('place_id', '3');
         params.append('point', point);
-        params.append('uesrname', loginUser!.name);
+        params.append('uesrname', loginUser!
+         );
         params.append('date', date);
         axios.post("http://localhost:8080/post/new",params)
         .then((res) => {

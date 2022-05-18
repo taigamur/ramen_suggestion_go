@@ -28,13 +28,13 @@ export const UserIndex: VFC = memo(() => {
 
     return (
         <>
-            <Wrap>
+            {/* <Wrap>
                 {users.map((user) => (
                     <WrapItem key={user.id} mx="auto">
                     <UserCard id={user.id} name={user.name} onClick={onClickUser}/>
                     </WrapItem>
                 ))}
-            </Wrap>
+            </Wrap> */}
         </>
     )
 });

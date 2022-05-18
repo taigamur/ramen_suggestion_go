@@ -8,7 +8,7 @@ export const Index: VFC = memo(() => {
     return(
         <>
             <p>Indexページです。</p>
-            <p>{loginUser?.name}さん</p>
+            <p>{loginUser}さん</p>
         </>
 
     );

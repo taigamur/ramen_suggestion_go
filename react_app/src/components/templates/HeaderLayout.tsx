@@ -1,5 +1,5 @@
 import {memo, VFC, ReactNode} from "react"
-import { Header } from "../organisms/Header";
+import { PrivateHeader } from "../organisms/PrivateHeader";
 
 // 受け取るpropsの型を定義
 type Props = {
@@ -10,7 +10,7 @@ export const HeaderLayout: VFC<Props> = memo((props) => {
     const { children } = props;
     return (
         <>
-            <Header/>
+            <PrivateHeader/>
             {children}
         </>
     )

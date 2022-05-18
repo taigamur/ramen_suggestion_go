@@ -47,9 +47,7 @@ func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc
 }
 
 func main() {
-	http.HandleFunc("/users/index", getAllUsers)
 
-	// http.HandleFunc("/", top)
 	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
 	// http.HandleFunc("/authenticate", authecticate)

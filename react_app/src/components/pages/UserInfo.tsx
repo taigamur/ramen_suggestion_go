@@ -11,7 +11,7 @@ export const UserInfo: VFC = memo(() => {
     const { loginUser } = useLoginUser();
     const { setLoginUser } = useLoginUser();
 
-    const [,,removeCookie ] = useCookies();
+    const [,,removeCookie ] = useCookies(["user"]);
 
     const { showMessage } = useMessage();
 
@@ -25,7 +25,7 @@ export const UserInfo: VFC = memo(() => {
     return(
         <>
             <p>ユーザー情報</p>
-            <p>ユーザー名: {loginUser?.name}</p>
+            
 
             <PrimaryButton onClick={onClick}>ログアウト</PrimaryButton>
         </>

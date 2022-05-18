@@ -1,22 +1,11 @@
-import {memo, VFC, useCallback} from "react"
+import {memo, VFC, useCallback, useEffect} from "react"
 import { useHistory } from "react-router-dom";
 import { useLoginUser } from "../../hooks/useLoginUser";
 
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button,
-    useDisclosure,
-    FormControl,
-    FormLabel,
-    Input,
 
-  } from '@chakra-ui/react'
+import { useDisclosure, Button } from '@chakra-ui/react'
+import { useCookies } from "react-cookie";
+
 import { SuggestModal } from "../organisms/SuggestModal";
 
 export const Home: VFC = memo(() => {
@@ -24,21 +13,18 @@ export const Home: VFC = memo(() => {
     const history = useHistory()
     const { loginUser } = useLoginUser();
 
-    if (loginUser === null){
-        history.push("/login");
-    }
-
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const onClickNewPost = useCallback(() => history.push("/post/new"),[]);
 
+    // if(!loginUser){
+    //     history.push("/login")
+    // }
+
     return(
         <>
             <p>Homeページです。</p>
-            <p>こんにちは、{loginUser?.name}さん</p>
-
-            {/* <p>{username}のPost</p> */}
-            <p>こんにちは、{loginUser?.name}さん</p>
+            <p>こんにちは、loginUser : {loginUser} さん</p>
     
             <Button colorScheme='teal' onClick={onOpen} autoFocus={false}>Suggestion</Button>
             <SuggestModal onClose={onClose} isOpen={isOpen}  />

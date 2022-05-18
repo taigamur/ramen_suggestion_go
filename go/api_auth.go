@@ -45,6 +45,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		apiuser, _ := GetApiUser(request.Name)
 		res, _ := json.Marshal(apiuser)
 		fmt.Fprint(w, string(res))
+		log.Println(string(res))
 	} else {
 		w.WriteHeader(http.StatusForbidden)
 	}

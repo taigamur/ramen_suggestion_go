@@ -14,7 +14,6 @@ type User struct {
 }
 
 type apiUser struct {
-	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -40,25 +39,6 @@ func (u *User) CreateUser() (err error) {
 	return err
 }
 
-// React 連携確認用のテスト
-func GetAllUsers() (users []apiUser, err error) {
-	cmd := `select id, name from users`
-	rows, err := Db.Query(cmd)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	for rows.Next() {
-		var user apiUser
-		err = rows.Scan(&user.ID, &user.Name)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		users = append(users, user)
-	}
-	rows.Close()
-	return users, err
-}
-
 func GetUser(id int) (user User, err error) {
 	user = User{}
 	cmd := `select name, password, created_at from users where id = ?`
@@ -72,9 +52,8 @@ func GetUser(id int) (user User, err error) {
 
 func GetApiUser(name string) (user apiUser, err error) {
 	user = apiUser{}
-	cmd := `select id, name from users where name = ?`
+	cmd := `select name from users where name = ?`
 	err = Db.QueryRow(cmd, name).Scan(
-		&user.ID,
 		&user.Name,
 	)
 	return user, err

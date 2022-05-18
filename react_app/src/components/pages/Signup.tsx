@@ -2,7 +2,6 @@ import {memo, VFC, useState, ChangeEvent} from "react"
 import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react"
 import { PrimaryButton} from "../atoms/button/PrimaryButton"
 import axios from "axios";
-import { User } from "../../types/user" 
 import { useHistory } from "react-router-dom";
 import { useMessage } from "../../hooks/useMessage";
 
@@ -26,7 +25,6 @@ export const Signup: VFC = memo(() => {
             if(res.status == 200){
                 showMessage({title: "ユーザー登録完了", status: "success"});
                 setLoading(false);
-                history.push("/home")
             }
         }).catch(() => {
             showMessage({title: "ユーザー名が既に使用されています", description: "他のユーザー名を入力してください",status: "error"});

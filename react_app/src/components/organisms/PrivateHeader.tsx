@@ -1,32 +1,23 @@
-import { memo, VFC, useCallback} from "react"
+import { memo, VFC, useCallback, useContext, useEffect} from "react"
 import {Flex, Heading, Box, Button, useDisclosure, Drawer, DrawerBody, DrawerContent, DrawerOverlay} from "@chakra-ui/react"
 import { useHistory } from "react-router-dom";
 
 import { HeaderListButton } from "../atoms/button/HeaderListButton";
-import { useLoginUser } from "../../hooks/useLoginUser";
+import { LoginUserContext } from "../../providers/LoginUserProvider";
 
-
-
-export const Header: VFC = memo(() => {
+export const PrivateHeader: VFC = memo(() => {
     const { isOpen, onOpen, onClose} = useDisclosure();
 
     const history = useHistory();
-
-    const { loginUser } = useLoginUser();
-
-    if (loginUser === null){
-        history.push("/login");
-    }
+    const { loginUser } = useContext(LoginUserContext);
 
     const onClickHome = useCallback(() => history.push("/home"), []);
     const onClickA = useCallback(() => history.push("/user/info"), []);
     const onClickB = useCallback(() => history.push("/index"), []);
     const onClickC = useCallback(() => {
-        const name = loginUser?.name
-        const url = "/user/" + name + "/post"
+        const url = "/user/" + loginUser + "/post"
         history.push(url)
     }, []);
-
 
     return (
         <>
