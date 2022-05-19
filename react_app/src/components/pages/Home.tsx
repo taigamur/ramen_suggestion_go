@@ -1,7 +1,6 @@
 import {memo, VFC, useCallback, useEffect} from "react"
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useLoginUser } from "../../hooks/useLoginUser";
-
 
 import { useDisclosure, Button } from '@chakra-ui/react'
 import { useCookies } from "react-cookie";

@@ -11,7 +11,7 @@ export const UserInfo: VFC = memo(() => {
     const { loginUser } = useLoginUser();
     const { setLoginUser } = useLoginUser();
 
-    const [,,removeCookie ] = useCookies(["user"]);
+    const [,,removeCookie ] = useCookies();
 
     const { showMessage } = useMessage();
 

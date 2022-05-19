@@ -1,12 +1,10 @@
 import { useContext, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { LoginUserContext, LoginUserContextType } from "../providers/LoginUserProvider";
-import { useHistory } from "react-router-dom";
 
 export const useLoginUser = () : LoginUserContextType => {
     const { loginUser } = useContext(LoginUserContext);
     const { setLoginUser} = useContext(LoginUserContext);
-    const history = useHistory();
     const [cookies, ] = useCookies();
 
     console.log(cookies)
