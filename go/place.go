@@ -3,10 +3,9 @@ package main
 import "log"
 
 type Place struct {
-	ID      int
-	Name    string
-	Address string
-	Value   int
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Address string `json:"address"`
 }
 
 func CreatePlace(id int, place string, hiragana string, address string) (err error) {

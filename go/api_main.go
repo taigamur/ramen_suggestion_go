@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -21,5 +23,22 @@ func postNew(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	} else {
 		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func postIndex(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+
+	username := r.PostFormValue("username")
+
+	posts, err := GetPosts(username)
+
+	if err != nil {
+		w.WriteHeader(http.StatusForbidden)
+		log.Println(err)
+	} else {
+		w.WriteHeader(http.StatusOK)
+		res, _ := json.Marshal(posts)
+		fmt.Fprint(w, string(res))
 	}
 }

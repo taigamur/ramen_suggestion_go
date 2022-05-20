@@ -6,13 +6,13 @@ import (
 )
 
 type Post struct {
-	ID        int
-	UserName  string
-	PlaceID   int
-	Value     int
-	Comment   string
-	Date      string
-	CreatedAt time.Time
+	ID        int       `json:"id"`
+	UserName  string    `json:"username"`
+	PlaceID   int       `json:"place_id`
+	Value     int       `json:"value"`
+	Date      string    `json:"date`
+	CreatedAt time.Time `json:"created_at"`
+	Place     Place     `json:"place"`
 }
 
 func CreatePost(place_id int, username string, value int, date string) (err error) {
@@ -29,13 +29,12 @@ func CreatePost(place_id int, username string, value int, date string) (err erro
 }
 
 func GetPost(id int) (post Post, err error) {
-	cmd := `select id, username, place_id, value, comment, date, created_at from posts where id = ?`
+	cmd := `select id, username, place_id, value, date, created_at from posts where id = ?`
 	err = Db.QueryRow(cmd, id).Scan(
 		&post.ID,
 		&post.UserName,
 		&post.PlaceID,
 		&post.Value,
-		&post.Comment,
 		&post.Date,
 		&post.CreatedAt,
 	)
@@ -43,7 +42,7 @@ func GetPost(id int) (post Post, err error) {
 }
 
 func GetPosts(username string) (posts []Post, err error) {
-	cmd := `select id, username, place_id, value, comment, date, created_at from posts where username = ? order by date desc`
+	cmd := `select id, username, place_id, value, date, created_at from posts where username = ? order by date desc`
 	rows, err := Db.Query(cmd, username)
 	if err != nil {
 		log.Fatalln(err)
@@ -54,13 +53,23 @@ func GetPosts(username string) (posts []Post, err error) {
 			&post.UserName,
 			&post.PlaceID,
 			&post.Value,
-			&post.Comment,
 			&post.Date,
 			&post.CreatedAt,
 		)
 		if err != nil {
 			log.Fatalln(err)
 		}
+
+		cmdPlace := `select id, name, address from places where id = ?`
+		err = Db.QueryRow(cmdPlace, post.PlaceID).Scan(
+			&post.Place.ID,
+			&post.Place.Name,
+			&post.Place.Address,
+		)
+		if err != nil {
+			log.Println(err)
+		}
+
 		posts = append(posts, post)
 	}
 	rows.Close()
@@ -68,8 +77,8 @@ func GetPosts(username string) (posts []Post, err error) {
 }
 
 func (t *Post) UpdatePost() error {
-	cmd := `update posts set comment = ?, place_id = ?, value = ? , username = ? , date = ? where id = ?`
-	_, err = Db.Exec(cmd, t.Comment, t.PlaceID, t.Value, t.UserName, t.Date, t.ID)
+	cmd := `update posts set place_id = ?, value = ? , username = ? , date = ? where id = ?`
+	_, err = Db.Exec(cmd, t.PlaceID, t.Value, t.UserName, t.Date, t.ID)
 	if err != nil {
 		log.Fatalln(err)
 	}

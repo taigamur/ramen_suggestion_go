@@ -13,7 +13,7 @@ func main() {
 	http.HandleFunc("/login", login)
 	// http.HandleFunc("/authenticate", authecticate)
 	// http.HandleFunc("/logout", logout)
-	// http.HandleFunc("/posts", index)
+	http.HandleFunc("/post/index", postIndex)
 	http.HandleFunc("/post/new", postNew)
 	// http.HandleFunc("/posts/save", postSave)
 	// http.HandleFunc("/posts/edit/", parseURL(postEdit))
