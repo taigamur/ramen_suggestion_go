@@ -13,11 +13,10 @@ var Db *sql.DB
 var err error
 
 const (
-	tableNameUser    = "users"
-	tableNamePost    = "posts"
-	talbeNameSession = "sessions"
-	tableNamePlace   = "places"
-	tableNamePoint   = "points"
+	tableNameUser  = "users"
+	tableNamePost  = "posts"
+	tableNamePlace = "places"
+	tableNamePoint = "points"
 )
 
 func init() {
@@ -41,16 +40,10 @@ func init() {
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, tableNamePost)
 	Db.Exec(cmdP)
 
-	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
-		id INT AUTO_INCREMENT PRIMARY KEY,
-		user_name TEXT,
-		user_id INT,
-		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, talbeNameSession)
-	Db.Exec(cmdS)
-
 	cmd := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INT PRIMARY KEY,
-		name TEXT,
+		name varchar(50),
+		hiragana varchar(50),
 		address TEXT)`, tableNamePlace)
 	Db.Exec(cmd)
 	create_init_place()

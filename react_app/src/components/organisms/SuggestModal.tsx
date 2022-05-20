@@ -1,17 +1,7 @@
-import { memo, ReactNode } from "react"
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    FormControl,
-    FormLabel,
-    Input,
-    Button,
-  } from '@chakra-ui/react'
+import { memo, ReactNode, useState, useEffect } from "react"
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
+
+import { Map } from "../molecules/Map"
 
 type Props = {
     onClose: () => void;
@@ -22,30 +12,25 @@ type Props = {
 export const SuggestModal = memo((props: Props) => {
 
     const { onClose, isOpen } = props;
+    const [ place, setPlace ] = useState<string>("");
+
+    useEffect(() => {
+        setPlace("茨城県つくば市天久保２丁目１１−１０")
+    },[])
 
     const onClickSuggest = () => {
         console.log("test")
+        setPlace("茨城県つくば市天久保２丁目６−１")
     }
 
     return(
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-        >
+        <Modal isOpen={isOpen} onClose={onClose} size={'3xl'}>
             <ModalOverlay />
             <ModalContent>
             <ModalHeader>Suggestion</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-                {/* <FormControl>
-                <FormLabel>First name</FormLabel>
-                <Input placeholder='First name' />
-                </FormControl>
-
-                <FormControl mt={4}>
-                <FormLabel>Last name</FormLabel>
-                <Input placeholder='Last name' />
-                </FormControl> */}
+                <Map place={place}/>
             </ModalBody>
 
             <ModalFooter>

@@ -17,13 +17,6 @@ type apiUser struct {
 	Name string `json:"name"`
 }
 
-type Session struct {
-	ID        int
-	UserID    int
-	UserName  string
-	CreatedAt time.Time
-}
-
 func (u *User) CreateUser() (err error) {
 	cmd := `insert into users (
 		name,
