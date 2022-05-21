@@ -45,7 +45,6 @@ export const Map = memo((props: Props) => {
 
     return (
         <>
-        <p>Map test</p>
         <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE!}>
             <GoogleMap mapContainerStyle={containerStyle} center={geocode!} zoom={15} >
                 <Marker position={geocode!} />

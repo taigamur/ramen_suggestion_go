@@ -6,7 +6,7 @@ import axios from "axios";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { SuggestModal } from "../organisms/SuggestModal";
 import { Post } from "../../types/post"
-import { PostItem } from "../organisms/PostItem"
+import { PostItem } from "../molecules/PostItem"
 
 
 export const Home: VFC = memo(() => {

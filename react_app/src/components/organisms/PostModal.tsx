@@ -11,18 +11,24 @@ import {
     FormLabel,
     Input,
     Button,
+    Heading,
+    Box,
   } from '@chakra-ui/react'
 import { useMessage } from "../../hooks/useMessage";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import DatePicker from "react-datepicker"
+import { Place } from "../../types/place"
+import { Map } from "../molecules/Map"
 
 import "react-datepicker/dist/react-datepicker.css"
 
 type Props = {
     onClose: () => void;
     isOpen: boolean;
+    address: string;
+    name: string;
 }
 
 export const PostModal = memo((props: Props) => {
@@ -41,7 +47,7 @@ export const PostModal = memo((props: Props) => {
 
     const [startDate, setStartDate] = useState(new Date());
 
-    const { onClose, isOpen } = props;
+    const { onClose, isOpen, address, name } = props;
 
     const onClickPost = () => {
         console.log(startDate)
@@ -74,23 +80,22 @@ export const PostModal = memo((props: Props) => {
         >
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader>New Post</ModalHeader>
+            <ModalHeader>新規投稿</ModalHeader>
             <ModalCloseButton />
-            <ModalBody pb={6}>
+            <ModalBody >
                 <FormControl>
+                    <Heading size="sm">{name}</Heading>
 
-                    {/* <FormLabel>yyyy/mm/dd</FormLabel>
-                    <Input id="date" placeholder='date' /> */}
-
-                    {/* <DatePicker selected={startDate} onChange={handleChange} /> */}
-                    <FormLabel>日付</FormLabel>
+                    <Heading size="sm" pt={5} pb={2}>日付</Heading>
                     <DatePicker selected={startDate} dateFormat="yyyy/MM/dd" onChange={(date:Date) => setStartDate(date)} />
 
-                    <FormLabel>Place</FormLabel>
-                    <Input readOnly placeholder='****'/>
+                    <Heading size="sm" pt={5} pb={2}>ポイント</Heading>
+                    <Input value={point} onChange={onChangePoint} placeholder='point'/>
 
-                    <FormLabel>Point</FormLabel>
-                    <Input value={point} onChange={onChangePoint} placeholder='point' />
+                    <Box pt={3}>
+                        <Map place={address}/>
+                    </Box>
+                    
 
                 </FormControl>
             </ModalBody>

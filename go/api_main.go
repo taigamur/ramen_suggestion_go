@@ -45,16 +45,16 @@ func postIndex(w http.ResponseWriter, r *http.Request) {
 
 func getPlaces(w http.ResponseWriter, r *http.Request) {
 	setApiHeader(w)
-	keyword := r.PostFormValue("keyword") // Post リクエスト限定のため
+	keyword := r.PostFormValue("keyword")
+	places, err := GetPlacesByKeyword(keyword)
 
-	if keyword == "" {
-		fmt.Println("keyword is null")
+	if err != nil {
+		w.WriteHeader(http.StatusForbidden)
+		log.Println(err)
 	} else {
-		places, err := GetPlacesByKeyword(keyword)
-
-		if err != nil {
-			w.WriteHeader(http.StatusForbidden)
-			log.Println(err)
+		if keyword == "" || len(places) == 0 {
+			w.WriteHeader(http.StatusNotFound)
+			log.Println("404: Not Found")
 		} else {
 			w.WriteHeader(http.StatusOK)
 			res, _ := json.Marshal(places)

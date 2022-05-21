@@ -58,7 +58,6 @@ func GetPlaces() (places []Place, err error) {
 func GetPlacesByKeyword(keyword string) (places []Place, err error) {
 	cmd := `select id, name, address from places where concat(name, hiragana) like ?`
 	s := "%" + keyword + "%"
-	log.Println("s: " + s)
 	rows, err := Db.Query(cmd, s)
 
 	for rows.Next() {
