@@ -54,3 +54,18 @@ func GetPlaces() (places []Place, err error) {
 	rows.Close()
 	return places, err
 }
+
+func GetPlacesByKeyword(keyword string) (places []Place, err error) {
+	cmd := `select id, name, address from places where concat(name, hiragana) like ?`
+	s := "%" + keyword + "%"
+	log.Println("s: " + s)
+	rows, err := Db.Query(cmd, s)
+
+	for rows.Next() {
+		var place Place
+		err = rows.Scan(&place.ID, &place.Name, &place.Address)
+		places = append(places, place)
+	}
+	rows.Close()
+	return places, err
+}

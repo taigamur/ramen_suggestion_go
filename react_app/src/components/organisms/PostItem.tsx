@@ -11,7 +11,7 @@ export const PostItem: VFC<Props> = memo((props) => {
 
 
     return(
-        <Box w='100%'>
+        <Box w='100%' p='6'>
             <Text>{post.id}</Text>
             <Text>{post.username}</Text>
             <Text>{post.place_id}</Text>

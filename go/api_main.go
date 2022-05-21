@@ -42,3 +42,23 @@ func postIndex(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, string(res))
 	}
 }
+
+func getPlaces(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	keyword := r.PostFormValue("keyword") // Post リクエスト限定のため
+
+	if keyword == "" {
+		fmt.Println("keyword is null")
+	} else {
+		places, err := GetPlacesByKeyword(keyword)
+
+		if err != nil {
+			w.WriteHeader(http.StatusForbidden)
+			log.Println(err)
+		} else {
+			w.WriteHeader(http.StatusOK)
+			res, _ := json.Marshal(places)
+			fmt.Fprint(w, string(res))
+		}
+	}
+}

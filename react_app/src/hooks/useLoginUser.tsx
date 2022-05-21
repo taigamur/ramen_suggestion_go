@@ -7,8 +7,6 @@ export const useLoginUser = () : LoginUserContextType => {
     const { setLoginUser} = useContext(LoginUserContext);
     const [cookies, ] = useCookies();
 
-    console.log(cookies)
-
     useEffect(() => {
         if(!loginUser){
             console.log("cookie : " + cookies.user)
@@ -17,8 +15,6 @@ export const useLoginUser = () : LoginUserContextType => {
             }
         }
     },[loginUser]);
-
-    console.log(loginUser)
 
     return useContext(LoginUserContext);
 }

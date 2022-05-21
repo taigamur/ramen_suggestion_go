@@ -25,7 +25,6 @@ type Props = {
     isOpen: boolean;
 }
 
-
 export const PostModal = memo((props: Props) => {
 
     const history = useHistory();
@@ -53,14 +52,14 @@ export const PostModal = memo((props: Props) => {
         var params = new URLSearchParams();
         params.append('place_id', '3');
         params.append('point', point);
-        params.append('uesrname', loginUser!
-         );
+        params.append('uesrname', loginUser!);
         params.append('date', date);
         axios.post("http://localhost:8080/post/new",params)
         .then((res) => {
             if(res.status == 200){
                 console.log("post success")
                 showMessage({title: "投稿完了", status:"success"})
+                history.push("/home")
             }
         }).catch(() => {
             console.log("post failed")

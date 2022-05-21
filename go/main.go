@@ -20,7 +20,7 @@ func main() {
 	// http.HandleFunc("/posts/update/", parseURL(postUpdate))
 	// http.HandleFunc("/posts/delete/", parseURL(postDelete))
 
-	// http.HandleFunc("/places/index", places)
+	http.HandleFunc("/place/index", getPlaces)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
