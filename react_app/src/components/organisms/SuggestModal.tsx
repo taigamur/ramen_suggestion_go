@@ -30,7 +30,7 @@ export const SuggestModal = memo((props: Props) => {
             <ModalHeader>Suggestion</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-                <Map place={place}/>
+                {/* <Map place={place} name={name}/> */}
             </ModalBody>
 
             <ModalFooter>

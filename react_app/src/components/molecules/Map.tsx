@@ -1,6 +1,8 @@
 import { memo, useEffect, useState } from "react"
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
+import { Link } from "@chakra-ui/react"
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 type Geocode = {
     lat: number;
@@ -9,6 +11,7 @@ type Geocode = {
 
 type Props = {
     place: string;
+    name: string;
 }
 
 const containerStyle = {
@@ -17,11 +20,14 @@ const containerStyle = {
 };
 
 export const Map = memo((props: Props) => {
-    const { place } = props;
+    const { place, name } = props;
 
     const [ geocode, setGeocode ] = useState<Geocode>()
+    const [ url, setURL ] = useState<string>("");
 
     const getGeocode = (place: string) => {
+        setURL('https://www.google.com/maps/search/?api=1&query=' + name + "+つくば")
+        console.log(url)
         var position: Geocode = {
             lat: 0,
             lng: 0,
@@ -34,6 +40,7 @@ export const Map = memo((props: Props) => {
         .then((res) => {
             position.lat = res.data.results[0].geometry.location.lat;
             position.lng = res.data.results[0].geometry.location.lng;
+            console.log(position)
             setGeocode(position)
         })
         .catch(() => {
@@ -45,6 +52,9 @@ export const Map = memo((props: Props) => {
 
     return (
         <>
+        <Link href={url} color='blue.600' isExternal>
+            Google Mapで開く <ExternalLinkIcon mx='2px' />
+        </Link>
         <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE!}>
             <GoogleMap mapContainerStyle={containerStyle} center={geocode!} zoom={15} >
                 <Marker position={geocode!} />

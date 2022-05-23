@@ -73,7 +73,7 @@ export const PostNew: VFC = memo(() => {
                 ))}
             </Wrap>
             { selectedPlace && 
-                <PostModal onClose={onClose} isOpen={isOpen} address={selectedPlace.address} name={selectedPlace.name} />  
+                <PostModal onClose={onClose} isOpen={isOpen} name={selectedPlace.name} id={selectedPlace.id} address={selectedPlace.address} />  
             }
         </>
     )

@@ -12,7 +12,7 @@ func postNew(w http.ResponseWriter, r *http.Request) {
 	setApiHeader(w)
 
 	place_id, _ := strconv.Atoi(r.PostFormValue("place_id"))
-	value, _ := strconv.Atoi(r.PostFormValue("value"))
+	value, _ := strconv.Atoi(r.PostFormValue("point"))
 	username := r.PostFormValue("username")
 	date := r.PostFormValue("date")
 
@@ -29,7 +29,7 @@ func postNew(w http.ResponseWriter, r *http.Request) {
 func postIndex(w http.ResponseWriter, r *http.Request) {
 	setApiHeader(w)
 
-	username := r.PostFormValue("username")
+	username := r.URL.Query().Get("username")
 
 	posts, err := GetPosts(username)
 

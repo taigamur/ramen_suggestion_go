@@ -8,9 +8,9 @@ import (
 type Post struct {
 	ID        int       `json:"id"`
 	UserName  string    `json:"username"`
-	PlaceID   int       `json:"place_id`
+	PlaceID   int       `json:"place_id"`
 	Value     int       `json:"value"`
-	Date      string    `json:"date`
+	Date      string    `json:"date"`
 	CreatedAt time.Time `json:"created_at"`
 	Place     Place     `json:"place"`
 }
@@ -49,7 +49,8 @@ func GetPosts(username string) (posts []Post, err error) {
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.ID,
+		err = rows.Scan(
+			&post.ID,
 			&post.UserName,
 			&post.PlaceID,
 			&post.Value,

@@ -16,7 +16,7 @@ export const PrivateHeader: VFC = memo(() => {
 
     const onClickHome = useCallback(() => history.push("/home"), []);
     const onClickA = useCallback(() => history.push("/user/info"), []);
-    const onClickB = useCallback(() => history.push("/index"), []);
+    const onClickPlaces = useCallback(() => history.push("/places"), []);
     const onClickC = useCallback(() => {
         const url = "/user/" + loginUser + "/post"
         history.push(url)
@@ -45,7 +45,7 @@ export const PrivateHeader: VFC = memo(() => {
                             <Button onClick={onClickA} variant='link' color="white" size="xs">ユーザー情報</Button>
                         </Box>
                         <Box pr={4}>
-                            <Button onClick={onClickB} variant='link' color="white" size="xs">Index</Button>
+                            <Button onClick={onClickPlaces} variant='link' color="white" size="xs">MyPlaces</Button>
                         </Box>
                         <Box>
                             <Button onClick={onClickC} variant='link' color="white" size="xs">LinkC</Button>
@@ -60,7 +60,7 @@ export const PrivateHeader: VFC = memo(() => {
                                 <Button w="100%" onClick={onClickA}>
                                     ユーザー情報
                                 </Button>
-                                <Button w="100%" onClick={onClickB}>
+                                <Button w="100%" onClick={onClickPlaces}>
                                     Index
                                 </Button>
                                 <Button w="100%" onClick={onClickC}>
