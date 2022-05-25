@@ -5,6 +5,6 @@ export type Post = {
     place_id: number;
     username: string;
     value: number;
-    date: Date;
+    date: string;
     place: Place;
 }

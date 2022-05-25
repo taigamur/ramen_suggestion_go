@@ -10,7 +10,7 @@ type Geocode = {
 }
 
 type Props = {
-    place: string;
+    address: string;
     name: string;
 }
 
@@ -20,12 +20,12 @@ const containerStyle = {
 };
 
 export const Map = memo((props: Props) => {
-    const { place, name } = props;
+    const { address, name } = props;
 
     const [ geocode, setGeocode ] = useState<Geocode>()
     const [ url, setURL ] = useState<string>("");
 
-    const getGeocode = (place: string) => {
+    const getGeocode = (address: string) => {
         setURL('https://www.google.com/maps/search/?api=1&query=' + name + "+つくば")
         console.log(url)
         var position: Geocode = {
@@ -34,7 +34,7 @@ export const Map = memo((props: Props) => {
         };
         axios.get('https://maps.googleapis.com/maps/api/geocode/json', 
             {params: 
-                {address: place ,
+                {address: address ,
                 key: process.env.REACT_APP_GOOGLE! }
             })
         .then((res) => {
@@ -48,7 +48,7 @@ export const Map = memo((props: Props) => {
         });
     }
 
-    useEffect(() => getGeocode(place),[place])
+    useEffect(() => getGeocode(address),[address])
 
     return (
         <>

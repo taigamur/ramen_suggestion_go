@@ -39,7 +39,7 @@ export const Home: VFC = memo(() => {
 
             <Box w="100%" align='center' pb={3}>
                 <Button colorScheme='teal' onClick={onOpen} autoFocus={false} variant='outline'>提案を見る</Button>
-                <SuggestModal onClose={onClose} isOpen={isOpen}  />
+                <SuggestModal onClose={onClose} isOpen={isOpen} />
             </Box>
 
             <Box w="100%" align='center'>

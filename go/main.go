@@ -11,16 +11,10 @@ func main() {
 
 	http.HandleFunc("/signup", signup)
 	http.HandleFunc("/login", login)
-	// http.HandleFunc("/authenticate", authecticate)
-	// http.HandleFunc("/logout", logout)
 	http.HandleFunc("/post/index", postIndex)
 	http.HandleFunc("/post/new", postNew)
-	// http.HandleFunc("/posts/save", postSave)
-	// http.HandleFunc("/posts/edit/", parseURL(postEdit))
-	// http.HandleFunc("/posts/update/", parseURL(postUpdate))
-	// http.HandleFunc("/posts/delete/", parseURL(postDelete))
-
 	http.HandleFunc("/place/index", getPlaces)
+	http.HandleFunc("/place/suggest", suggestPlace)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 

@@ -94,7 +94,7 @@ export const PostModal = memo((props: Props) => {
                         value={value}
                         onChange={handleChange}
                         max = {10}
-                        min = {0}
+                        min = {1}
                     >
                         <SliderTrack>
                         <SliderFilledTrack />
@@ -104,7 +104,7 @@ export const PostModal = memo((props: Props) => {
                     </Flex>
 
                     <Box pt={3}>
-                        <Map place={address} name={name}/>
+                        <Map address={address} name={name}/>
                     </Box>
                     
 

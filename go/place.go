@@ -1,11 +1,20 @@
 package main
 
-import "log"
+import (
+	"database/sql"
+	"log"
+)
 
 type Place struct {
 	ID      int    `json:"id"`
 	Name    string `json:"name"`
 	Address string `json:"address"`
+}
+
+type Suggest struct {
+	Place Place `json:"place"`
+	Value int   `json:"value"`
+	Flag  bool  `json:"flag"`
 }
 
 func CreatePlace(id int, place string, hiragana string, address string) (err error) {
@@ -27,10 +36,12 @@ func CreatePlace(id int, place string, hiragana string, address string) (err err
 	return err
 }
 
-func GetPlace(id int) (place Place, err error) {
-	place = Place{}
-	cmd := `select id, name, palce from places where id = ?`
-	err = Db.QueryRow(cmd, id).Scan(&place.ID, &place.Name, &place.Address)
+func GetPlace(id int) (place Suggest, err error) {
+	place = Suggest{}
+	cmd := `select id, name, address from places where id = ?`
+	err = Db.QueryRow(cmd, id).Scan(&place.Place.ID, &place.Place.Name, &place.Place.Address)
+	place.Value = 5
+	place.Flag = false
 	return place, err
 }
 
@@ -67,4 +78,39 @@ func GetPlacesByKeyword(keyword string) (places []Place, err error) {
 	}
 	rows.Close()
 	return places, err
+}
+
+func GetSuggestPlaces(username string) (suggests []Suggest, err error) {
+	cmd := `select id, name, address from places`
+	rows, err := Db.Query(cmd)
+	if err != nil {
+		log.Println(err)
+	}
+	for rows.Next() {
+		var suggest Suggest
+		err = rows.Scan(
+			&suggest.Place.ID,
+			&suggest.Place.Name,
+			&suggest.Place.Address,
+		)
+		if err != nil {
+			log.Println(err)
+		}
+		cmdCnt := `select value from points where place_id = ? AND username = ? `
+		err := Db.QueryRow(cmdCnt, suggest.Place.ID, username).Scan(
+			&suggest.Value,
+		)
+		if err == sql.ErrNoRows {
+			suggest.Flag = false
+			suggest.Value = 5
+		} else if err != nil {
+			log.Println(err)
+		} else {
+			suggest.Flag = true
+		}
+
+		suggests = append(suggests, suggest)
+	}
+	rows.Close()
+	return suggests, err
 }
