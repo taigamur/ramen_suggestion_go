@@ -86,9 +86,9 @@ func (t *Post) UpdatePost() error {
 	return err
 }
 
-func (t *Post) DeletePost() error {
+func DeletePost(id int) error {
 	cmd := `delete from posts where id = ?`
-	_, err = Db.Exec(cmd, t.ID)
+	_, err = Db.Exec(cmd, id)
 	if err != nil {
 		log.Fatalln(err)
 	}

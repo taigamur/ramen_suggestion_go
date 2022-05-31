@@ -72,3 +72,22 @@ func getPlaces(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
+func postDelete(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	id, _ := strconv.Atoi(r.PostFormValue("id"))
+	username := r.PostFormValue("username")
+
+	post, _ := GetPost(id)
+	if post.UserName == username {
+		err := DeletePost(id)
+		if err != nil {
+			log.Println("post delete error")
+			w.WriteHeader(http.StatusBadRequest)
+		} else {
+			w.WriteHeader(http.StatusOK)
+		}
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
+	}
+}

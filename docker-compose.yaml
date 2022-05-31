@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   go:
@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     tty: true
     ports:
-      - 8080:8080
+      - 80:8080
     env_file:
       - .env
     depends_on:
@@ -26,7 +26,6 @@ services:
       context: ./mysql
       dockerfile: Dockerfile
     tty: true
-    platform: linux/x86_64
     ports:
       - 3306:3306
     env_file:
@@ -40,7 +39,7 @@ services:
 
 volumes:
   mysql_test_volume:
-    name: mysql_test_volume
+    # name: mysql_test_volume
 
 networks:
   golang_test_network:
