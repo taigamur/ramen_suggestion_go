@@ -1,23 +1,31 @@
-# Tsukbua Ramen Suggest App
+# つくば市周辺のラーメン店を紹介するアプリケーション
 
-自分の好みとこれまでの訪問履歴からつくば市のおすすめのラーメン店を紹介するアプリケーション
+# URL
 
+https://tsukuba-ramen-suggest.com/
 
 # 機能紹介
 
-* ラーメン店の提案機能
+## ラーメン店のポイントの記録
 
-* 訪問したお店の投稿機能
+<img src="image/func1.png" width="60%">
 
-* 全ラーメン店の好みのポイントの管理機能
+## ラーメン店の提案
+
+登録したポイントを元にラーメン店を提案。登録のないお店については一定のポイントで計算。
+
+<img src="image/func2.png" width="70%">
+
+# 開発環境・言語等
+
+![](image/pic1.png)
 
 
-## 開発環境・言語等
+## [frontend](https://github.com/taigamur/ramen_suggestion_react)
+React, TypeScript
 
-Docker
+## backend
+Docker, Go
 
-Go
-
-AWS RDS MySQL
-
-AWS ECS
+## dabase
+Docker, MySQL
