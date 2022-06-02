@@ -10,7 +10,7 @@ https://tsukuba-ramen-suggest.com/
 
 <img src="image/func1.png" width="60%">
 
-## ラーメン店の提案
+### ラーメン店の提案
 
 登録したポイントを元にラーメン店を提案。登録のないお店については一定のポイントで計算。
 
