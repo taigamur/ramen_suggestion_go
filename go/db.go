@@ -25,6 +25,7 @@ func init() {
 	// defer Db.Close()
 
 	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INT AUTO_INCREMENT UNIQUE,
 		name varchar(50) PRIMARY KEY,
 		password varchar(255) NOT NULL,
 		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)`, tableNameUser)

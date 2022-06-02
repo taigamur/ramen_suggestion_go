@@ -8,7 +8,7 @@ https://tsukuba-ramen-suggest.com/
 
 ### ラーメン店のポイントの記録
 
-<img src="image/func1.png" width="60%">
+<img src="image/func1.png" width="90%">
 
 ### ラーメン店の提案
 
@@ -24,7 +24,7 @@ https://tsukuba-ramen-suggest.com/
 ### [frontend](https://github.com/taigamur/ramen_suggestion_react)
 React, TypeScript
 
-### backend
+### [backend](https://github.com/taigamur/ramen_suggestion_go)
 Docker, Go
 
 ### dabase
