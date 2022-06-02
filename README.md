@@ -6,7 +6,7 @@ https://tsukuba-ramen-suggest.com/
 
 # 機能紹介
 
-## ラーメン店のポイントの記録
+### ラーメン店のポイントの記録
 
 <img src="image/func1.png" width="60%">
 
@@ -21,11 +21,11 @@ https://tsukuba-ramen-suggest.com/
 ![](image/pic1.png)
 
 
-## [frontend](https://github.com/taigamur/ramen_suggestion_react)
+### [frontend](https://github.com/taigamur/ramen_suggestion_react)
 React, TypeScript
 
-## backend
+### backend
 Docker, Go
 
-## dabase
+### dabase
 Docker, MySQL
