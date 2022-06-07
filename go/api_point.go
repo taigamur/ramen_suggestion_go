@@ -50,3 +50,22 @@ func pointUpdate(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	}
 }
+
+func publicPointIndex(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	user_id, _ := strconv.Atoi(r.URL.Query().Get("user_id"))
+
+	log.Println(user_id)
+	username, err := GetUserName(user_id)
+
+	log.Println(username)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	points := GetPoints(username)
+	w.WriteHeader(http.StatusOK)
+	res, _ := json.Marshal(points)
+	fmt.Fprint(w, string(res))
+}

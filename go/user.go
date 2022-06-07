@@ -43,6 +43,14 @@ func GetUser(id int) (user User, err error) {
 	return user, err
 }
 
+func GetUserName(id int) (username string, err error) {
+	cmd := `select name from users where id = ?`
+	err = Db.QueryRow(cmd, id).Scan(
+		&username,
+	)
+	return username, err
+}
+
 func GetApiUser(name string) (user apiUser, err error) {
 	user = apiUser{}
 	cmd := `select name from users where name = ?`
@@ -61,4 +69,12 @@ func GetUserByUserName(user_name string) (user User, err error) {
 		&user.CreatedAt,
 	)
 	return user, err
+}
+
+func GetUserId(username string) (user_id int, err error) {
+	cmd := `select id from users where name = ?`
+	err = Db.QueryRow(cmd, username).Scan(
+		&user_id,
+	)
+	return user_id, err
 }
