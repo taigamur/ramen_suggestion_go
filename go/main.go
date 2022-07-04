@@ -13,6 +13,7 @@ func main() {
 	http.HandleFunc("/login", login)
 	// user
 	http.HandleFunc("/user/id", getUserId)
+	http.HandleFunc("/user/delete", deleteUser)
 	// post
 	http.HandleFunc("/post/index", postIndex)
 	http.HandleFunc("/post/new", postNew)

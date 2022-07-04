@@ -20,3 +20,13 @@ func getUserId(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(user_id)
 	fmt.Fprint(w, string(res))
 }
+
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+	setApiHeader(w)
+	username := r.URL.Query().Get("username")
+	err := DeleteUser(username)
+	if err != nil {
+		log.Println(err)
+	}
+	w.WriteHeader(http.StatusOK)
+}

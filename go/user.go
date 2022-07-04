@@ -78,3 +78,10 @@ func GetUserId(username string) (user_id int, err error) {
 	)
 	return user_id, err
 }
+
+func DeleteUser(username string) (err error) {
+	cmd := `delete from users where name = ?`
+	_, err = Db.Exec(cmd, username)
+	log.Println(err)
+	return err
+}
